@@ -1,8 +1,5 @@
 package com.rohitneel.jetpackcomposetutorials.text
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,195 +26,190 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-class CustomTextActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+@Composable
+fun CustomTextCompose() {
+    val scrollState = rememberScrollState()
 
-        setContent {
+    Column(
+        modifier = Modifier.verticalScroll(scrollState)
+    ) {
+        SimpleText()
 
-            val scrollState = rememberScrollState()
-            Column(
-                modifier = Modifier.verticalScroll(scrollState)
-            ) {
-                SimpleText()
+        TextWithColor()
 
-                TextWithColor()
+        TextWithBiggerFontSize()
 
-                TextWithBiggerFontSize()
+        BoldText()
 
-                BoldText()
+        ItalicText()
 
-                ItalicText()
+        TextWithCustomFontFamily()
 
-                TextWithCustomFontFamily()
+        TextWithUnderline()
 
-                TextWithUnderline()
+        TextWithStrikeThrough()
 
-                TextWithStrikeThrough()
+        JustifyTextAlign()
 
-                JustifyTextAlign()
+        ModifiedTextIntent()
 
-                ModifiedTextIntent()
+        ModifiedLineHeightText()
 
-                ModifiedLineHeightText()
+        CustomAnnotatedText()
 
-                CustomAnnotatedText()
+        Divider(color = Color.Gray)
 
-                Divider(color = Color.Gray)
-
-                TextWithBackground()
-            }
-        }
+        TextWithBackground()
     }
+}
 
-    @Composable
-    private fun SimpleText() {
-        CustomStyledText(
-            "This is the default text style"
+@Composable
+private fun SimpleText() {
+    CustomStyledText(
+        "This is the default text style"
+    )
+}
+
+@Composable
+private fun TextWithColor() {
+    CustomStyledText(
+        "This text is blue in color",
+        style = TextStyle(
+            color = Color.Blue
         )
-    }
+    )
+}
 
-    @Composable
-    private fun TextWithColor() {
-        CustomStyledText(
-            "This text is blue in color",
+@Composable
+private fun TextWithBiggerFontSize() {
+    CustomStyledText(
+        "This text has a bigger font size",
+        style = TextStyle(
+            fontSize = 30.sp
+        )
+    )
+}
+
+@Composable
+private fun BoldText() {
+    CustomStyledText(
+        "This text is bold",
+        style = TextStyle(
+            fontWeight = FontWeight.W700
+        )
+    )
+}
+
+@Composable
+private fun ItalicText() {
+    CustomStyledText(
+        "This text is italic",
+        style = TextStyle(
+            fontStyle = FontStyle.Italic
+        )
+    )
+}
+
+@Composable
+private fun TextWithCustomFontFamily() {
+    CustomStyledText(
+        "This text is using a custom font family",
+        style = TextStyle(
+            fontFamily = FontFamily.Cursive
+        )
+    )
+}
+
+@Composable
+private fun TextWithUnderline() {
+    CustomStyledText(
+        "This text has an underline",
+        style = TextStyle(
+            textDecoration = TextDecoration.Underline
+        )
+    )
+}
+
+@Composable
+private fun TextWithStrikeThrough() {
+    CustomStyledText(
+        "This text has a strikethrough line",
+        style = TextStyle(
+            textDecoration = TextDecoration.LineThrough
+        )
+    )
+}
+
+@Composable
+private fun CenterTextAlign() {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = "This text is center aligned",
             style = TextStyle(
-                color = Color.Blue
-            )
+                textAlign = TextAlign.Center
+            ),
+            modifier = Modifier.padding(16.dp)
         )
     }
+}
 
-    @Composable
-    private fun TextWithBiggerFontSize() {
-        CustomStyledText(
-            "This text has a bigger font size",
-            style = TextStyle(
-                fontSize = 30.sp
-            )
+@Composable
+private fun JustifyTextAlign() {
+    CustomStyledText(
+        "This text will demonstrate how to justify " +
+                "your paragraph to ensure that the text that ends with a soft " +
+                "line break spreads and takes the entire width of the container",
+        style = TextStyle(
+            textAlign = TextAlign.Justify
         )
-    }
+    )
+}
 
-    @Composable
-    private fun BoldText() {
-        CustomStyledText(
-            "This text is bold",
-            style = TextStyle(
-                fontWeight = FontWeight.W700
-            )
+@Composable
+private fun ModifiedTextIntent() {
+    CustomStyledText(
+        "This text will demonstrate how to add " +
+                "indentation to your text. In this example, indentation was only " +
+                "added to the first line. You also have the option to add " +
+                "indentation to the rest of the lines if you'd like",
+        style = TextStyle(
+            textAlign = TextAlign.Justify,
+            textIndent = TextIndent(firstLine = 30.sp)
         )
-    }
+    )
+}
 
-    @Composable
-    private fun ItalicText() {
-        CustomStyledText(
-            "This text is italic",
-            style = TextStyle(
-                fontStyle = FontStyle.Italic
-            )
+@Composable
+private fun ModifiedLineHeightText() {
+    CustomStyledText(
+        "The line height of this text has been " +
+                "increased hence you will be able to see more space between each " +
+                "line in this paragraph.",
+        style = TextStyle(
+            textAlign = TextAlign.Justify,
+            lineHeight = 20.sp
         )
-    }
+    )
+}
 
-    @Composable
-    private fun TextWithCustomFontFamily() {
-        CustomStyledText(
-            "This text is using a custom font family",
-            style = TextStyle(
-                fontFamily = FontFamily.Cursive
-            )
+@Composable
+private fun CustomAnnotatedText() {
+    val annotatedString = buildAnnotatedString {
+        append("This string has style spans")
+        addStyle(style = SpanStyle(color = Color.Red), start = 0, end = 4)
+        addStyle(style = SpanStyle(color = Color.Green), start = 5, end = 21)
+        addStyle(style = SpanStyle(color = Color.Blue), start = 22, end = 27)
+    }
+    Text(annotatedString, modifier = Modifier.padding(16.dp))
+}
+
+@Composable
+private fun TextWithBackground() {
+    Surface(color = Color.Yellow) {
+        Text(
+            text = "This text has a background color",
+            modifier = Modifier.padding(16.dp)
         )
-    }
-
-    @Composable
-    private fun TextWithUnderline() {
-        CustomStyledText(
-            "This text has an underline",
-            style = TextStyle(
-                textDecoration = TextDecoration.Underline
-            )
-        )
-    }
-
-    @Composable
-    private fun TextWithStrikeThrough() {
-        CustomStyledText(
-            "This text has a strikethrough line",
-            style = TextStyle(
-                textDecoration = TextDecoration.LineThrough
-            )
-        )
-    }
-
-    @Composable
-    private fun CenterTextAlign() {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                text = "This text is center aligned",
-                style = TextStyle(
-                    textAlign = TextAlign.Center
-                ),
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-    }
-
-    @Composable
-    private fun JustifyTextAlign() {
-        CustomStyledText(
-            "This text will demonstrate how to justify " +
-                    "your paragraph to ensure that the text that ends with a soft " +
-                    "line break spreads and takes the entire width of the container",
-            style = TextStyle(
-                textAlign = TextAlign.Justify
-            )
-        )
-    }
-
-    @Composable
-    private fun ModifiedTextIntent() {
-        CustomStyledText(
-            "This text will demonstrate how to add " +
-                    "indentation to your text. In this example, indentation was only " +
-                    "added to the first line. You also have the option to add " +
-                    "indentation to the rest of the lines if you'd like",
-            style = TextStyle(
-                textAlign = TextAlign.Justify,
-                textIndent = TextIndent(firstLine = 30.sp)
-            )
-        )
-    }
-
-    @Composable
-    private fun ModifiedLineHeightText() {
-        CustomStyledText(
-            "The line height of this text has been " +
-                    "increased hence you will be able to see more space between each " +
-                    "line in this paragraph.",
-            style = TextStyle(
-                textAlign = TextAlign.Justify,
-                lineHeight = 20.sp
-            )
-        )
-    }
-
-    @Composable
-    private fun CustomAnnotatedText() {
-        val annotatedString = buildAnnotatedString {
-            append("This string has style spans")
-            addStyle(style = SpanStyle(color = Color.Red), start = 0, end = 4)
-            addStyle(style = SpanStyle(color = Color.Green), start = 5, end = 21)
-            addStyle(style = SpanStyle(color = Color.Blue), start = 22, end = 27)
-        }
-        Text(annotatedString, modifier = Modifier.padding(16.dp))
-    }
-
-    @Composable
-    private fun TextWithBackground() {
-        Surface(color = Color.Yellow) {
-            Text(
-                text = "This text has a background color",
-                modifier = Modifier.padding(16.dp)
-            )
-        }
     }
 }
 

@@ -1,8 +1,6 @@
 package com.rohitneel.jetpackcomposetutorials.text
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -141,19 +139,6 @@ private fun TextWithStrikeThrough() {
 }
 
 @Composable
-private fun CenterTextAlign() {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = "This text is center aligned",
-            style = TextStyle(
-                textAlign = TextAlign.Center
-            ),
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Composable
 private fun JustifyTextAlign() {
     CustomStyledText(
         "This text will demonstrate how to justify " +
@@ -225,7 +210,7 @@ fun CustomStyledText(displayText: String, style: TextStyle? = null, maxLines: In
     Divider(color = Color.Gray)
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CustomStyledTextPreview() {
     CustomStyledText(
